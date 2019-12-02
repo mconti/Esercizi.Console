@@ -69,4 +69,9 @@ public class PesoLettereTest
     {
         Assert.Equal(87, PesoLettere.Pesa("abcdefghijklmnopqrstuvwxyz"));
     }
+    [Fact]
+    public void Ciao_Mondo()
+    {
+        Assert.Equal(14, PesoLettere.Pesa("CiaoMondo"));
+    }
 }
