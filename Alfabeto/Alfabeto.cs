@@ -5,8 +5,8 @@ public static class Alfabeto
 {
     public static bool Verifica(string input)
     {
-        //string alfabeto = "qwertyuiopasdfghjklzxcvbnm";
+        string alfabeto = "abcdefghilmnopqrstuvz";
 
-        return true;
+        return alfabeto.Length==0;
     }
 }

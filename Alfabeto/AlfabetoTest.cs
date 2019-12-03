@@ -23,21 +23,15 @@ public class AlfabetoTest
     }
 
     [Fact]
-    public void Missing_the_letter_x()
+    public void Missing_the_letter_t()
     {
-        Assert.False(Alfabeto.Verifica("a quick movement of the enemy will jeopardize five gunboats"));
-    }
-
-    [Fact]
-    public void Missing_the_letter_h()
-    {
-        Assert.False(Alfabeto.Verifica("five boxing wizards jump quickly at it"));
+        Assert.False(Alfabeto.Verifica("Ma che bel gufo spenzola da quei ravi"));
     }
 
     [Fact]
     public void With_underscores()
     {
-        Assert.True(Alfabeto.Verifica("the_quick_brown_fox_jumps_over_the_lazy_dog"));
+        Assert.True(Alfabeto.Verifica("Qualche vago ione tipo zolfo, bromo, sodio"));
     }
 
     [Fact]
@@ -61,6 +55,6 @@ public class AlfabetoTest
     [Fact]
     public void Case_insensitive()
     {
-        Assert.False(Alfabeto.Verifica("the quick brown fox jumps over with lazy FX"));
+        Assert.True(Alfabeto.Verifica("Che Tempi brevi zio, quando solfeggi "));
     }
 }
