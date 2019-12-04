@@ -6,7 +6,7 @@ public class MediaPesataTest
     [Fact]
     public void test1()
     {
-        Assert.Equal(6.326, MediaPesata.Calcola("file1.txt"));
+        Assert.Equal(6.962, MediaPesata.Calcola("file1.txt"));
     }
 
     [Fact]

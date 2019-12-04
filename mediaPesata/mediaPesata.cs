@@ -12,7 +12,7 @@ public static class MediaPesata
         string riga = sr.ReadLine();
 
         // scompone in due colonne la riga
-        string[] colonne = riga.Split(',');
+        string[] colonne = riga.Split(';');
 
         // Trasforma le stringhe lette in valori double
         Double.TryParse( colonne[0], out double valore );
