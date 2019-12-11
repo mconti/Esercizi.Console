@@ -1,7 +1,8 @@
 using System;
 
 public static class EtaSpaziale
-{
+{ 
+
     public static double OnEarth(int secondi)
     {
         return 0;
