@@ -1,42 +1,47 @@
 using System;
 
-public class EtaSpaziale
-{
-    public EtaSpaziale(int seconds)
+public static class EtaSpaziale
+{ 
+
+    public static double OnEarth(int secondi)
     {
+        return 0;
     }
 
-    public double OnEarth()
+    public static double OnMercury(int secondi)
     {
+        return 0;
     }
 
-    public double OnMercury()
+    public static double OnVenus(int secondi)
     {
+        return 0;
     }
 
-    public double OnVenus()
+    public static double OnMars(int secondi)
     {
-    }
-
-    public double OnMars()
-    {
-
-    }
-
-    public double OnJupiter()
-    {
+        return 0;
 
     }
 
-    public double OnSaturn()
+    public static double OnJupiter(int secondi)
     {
+        return 0;
+
     }
 
-    public double OnUranus()
+    public static double OnSaturn(int secondi)
     {
+        return 0;
     }
 
-    public double OnNeptune()
+    public static double OnUranus(int secondi)
     {
+        return 0;
+    }
+
+    public static double OnNeptune(int secondi)
+    {
+        return 0;
     }
 }
