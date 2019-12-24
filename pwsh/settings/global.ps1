@@ -5,9 +5,6 @@
 # define and global functions
 #
 
-# path
-$ROOT="/Volumes/GoogleDrive/Il mio Drive/Classroom"
-$ROOT_DESTINAZIONE="/Users/maurizio/Desktop/"
 
 # colori
 $OK_Color = "Green"
