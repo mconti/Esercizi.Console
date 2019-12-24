@@ -1,3 +1,9 @@
+#
+# Power Shell Core script for exercises management
+# posta@maurizioconti.com - december 2019
+#
+# define and global functions
+#
 
 # path
 $ROOT="/Volumes/GoogleDrive/Il mio Drive/Classroom"

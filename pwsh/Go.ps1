@@ -1,6 +1,8 @@
-#$CLASSE="4H"
-#$MATERIA="Informatica"
-#$PROGETTO="Grani"
+#
+# Power Shell Core script for exercises management
+# posta@maurizioconti.com - december 2019
+#
+# main
 
 # include
 $ScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent

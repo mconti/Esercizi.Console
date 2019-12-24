@@ -1,3 +1,10 @@
+#
+# Power Shell Core script for exercises management
+# posta@maurizioconti.com - december 2019
+#
+# general purpose funcions and utility
+#
+
 function Print-Footer
 {    
     Write-host ""
