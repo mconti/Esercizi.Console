@@ -93,8 +93,7 @@ function Ritira-Compito {
                     
                         # Cerca il .csproj
                         $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
-                        Write-host "sorgenteConPath: "  $sorgenteConPath
-                        Write-host "PRJ_DEST_RIR: "  $PRJ_DEST_DIR\$alunno
+
                         # Se non lo trovo, segnalo in giallo
                         if( $sorgenteConPath -eq $null ){
                             Write-host ("Manca .csproj {0}" -f (Get-ChildItem $sorgenteConPath)) -ForegroundColor $TooLateAccepted_Color
@@ -104,9 +103,6 @@ function Ritira-Compito {
                             # per sistemare quelli che hanno consegnato in directory annidate  
                             $tutti_i_file_estratti = (Split-Path $sorgenteConPath) + "\*.*"
                             $destinazione = $PRJ_DEST_DIR + "\" + $alunno
-                            Write-host "sorg: "  $tutti_i_file_estratti
-                            Write-host "dest: "  $destinazione
-                            return
 
                             Move-Item -Path $tutti_i_file_estratti -Destination $destinazione
                         
