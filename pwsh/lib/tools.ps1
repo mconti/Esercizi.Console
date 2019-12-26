@@ -41,6 +41,24 @@ function Print-Header
 function Ritira-Compito {
     param( [string]$CLASSE, [string]$MATERIA, [string]$PROGETTO )
 
+    # Impone che stia girando PWSH
+#Requires -PSEdition Core
+
+    if ( $PSVersionTable.Platform -eq "Unix" )
+    {
+        # path macbook
+        Write-Host "Sono su mac"
+        $ROOT="/Volumes/GoogleDrive/Il mio Drive/Classroom"
+        $ROOT_DESTINAZIONE="/Users/maurizio/Desktop/"
+    }
+    else 
+    {
+        Write-Host "Sono su windows"
+        # path windows10 casa mia
+        $ROOT="D:\Il mio Drive\Classroom"
+        $ROOT_DESTINAZIONE="C:\Users\posta\Desktop\"
+    }
+
     # Include 
     . ($ScriptDirectory + "\settings\" + $CLASSE + "-" + $MATERIA + ".ps1")
     . ($ScriptDirectory + "\settings\" + "global.ps1")
