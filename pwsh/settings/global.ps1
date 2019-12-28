@@ -16,7 +16,7 @@ $Wrong_Color = "Red"
 $DoubleDelivery_Color = "Cyan"
 
 $ESTENSIONE="zip"
-$GIORNI_VALIDITA_PRECEDENTI = 50
+$GIORNI_VALIDITA_PRECEDENTI = 38
 $ORE_VALIDITA_PRECEDENTI = 1
 $RITIRO=$true            # Abilita la copia dei file
 $RITIRO_RITARDI=$false   # Abilita il ritiro anche se in ritardo

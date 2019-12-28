@@ -5,7 +5,7 @@
     <DebugType>Full</DebugType>
     <IsPackable>false</IsPackable>
     <CoverletOutputFormat>cobertura,json,opencover,teamcity</CoverletOutputFormat>
-    <CollectCoverage>true</CollectCoverage>
+    <CollectCoverage>false</CollectCoverage>
     <CoverletOutput>./CoverResults/</CoverletOutput>
   </PropertyGroup>
 
