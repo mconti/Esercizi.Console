@@ -41,6 +41,7 @@ function Ritira-Compito {
 
             $PRJ_DEST_DIR = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO + "/" + $DATA
             $CSV_DEST_DIR = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO
+            $CSV_RIEPILOGO_DEST_DIR = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA
             $PRJ_DEST_DIR_RITARDO = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO + "/" + $DATA + "R"
         }
         else {
@@ -439,4 +440,40 @@ function Get-StatoCompito {
     }
 
     return $statoDelCompito
+}
+
+#
+#
+#
+function Esporta-CSV
+{
+    [CmdletBinding()]
+    param( $NOME_CLASSE, $MATERIA )
+
+    $attuale = Get-Location 
+    $DesktopPath = [Environment]::GetFolderPath("Desktop")
+    $workDir = "$DesktopPath\Consegnati\$NOME_CLASSE\$MATERIA"
+    Set-Location -Path $workDir
+    
+    $NOME_FILE = (".\$NOME_CLASSE-$MATERIA")
+     
+    if( Test-Path ("$NOME_FILE-ConErrori.csv") ){
+        Remove-Item ("$NOME_FILE-ConErrori.csv")
+    }
+
+    if( Test-Path ("$NOME_FILE-SenzaErrori.csv") ){
+        Remove-Item ("$NOME_FILE-SenzaErrori.csv")
+    }
+    
+    Get-ChildItem -Filter *KO.csv -Recurse | Select-Object -ExpandProperty FullName | Import-Csv  | Export-Csv ($NOME_FILE + "-ConErrori.csv") -NoTypeInformation -Append 
+    Get-ChildItem -Filter *OK.csv -Recurse | Select-Object -ExpandProperty FullName | Import-Csv  | Export-Csv ($NOME_FILE + "-SenzaErrori.csv") -NoTypeInformation -Append
+    
+    $ConErrori = Import-Csv ($NOME_FILE + "-ConErrori.csv")
+    $SenzaErrori = Import-Csv ($NOME_FILE + "-SenzaErrori.csv")
+    ($ConErrori + $SenzaErrori) | Sort-Object -Property Alunno | Export-Csv ($NOME_FILE + "-PerAlunno.csv") -NoTypeInformation
+    ($ConErrori + $SenzaErrori) | Sort-Object -Property Progetto, Alunno | Export-Csv ($NOME_FILE + "-PerProgetto.csv") -NoTypeInformation
+    ($ConErrori + $SenzaErrori) | Sort-Object -Property Progetto, Risultato, Alunno | Export-Csv ($NOME_FILE + "-PerProgettoRisultato.csv") -NoTypeInformation
+
+    Set-Location -Path $attuale
+
 }

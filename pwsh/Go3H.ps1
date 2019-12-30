@@ -21,30 +21,14 @@ $ScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 . ($ScriptDirectory + "\lib\tools.ps1")
 . ($ScriptDirectory + "\lib\" + "Write-PSObject.ps1")
 
-Ritira-Compito 3H Informatica "Collatz"
-Ritira-Compito 3H Informatica "Fibonacci"
-Ritira-Compito 3H Informatica "MediaStream"
-Ritira-Compito 3H Informatica "NumeroStream"
-Ritira-Compito 3H Informatica "Spazio"
+#Ritira-Compito 3H Informatica "Collatz"
+#Ritira-Compito 3H Informatica "Fibonacci"
+#Ritira-Compito 3H Informatica "MediaStream"
+#Ritira-Compito 3H Informatica "NumeroStream"
+#Ritira-Compito 3H Informatica "Spazio"
 
-$attuale = Get-Location 
-$DesktopPath = [Environment]::GetFolderPath("Desktop")
-$workDir = $DesktopPath + "\Consegnati\3H\Informatica"
-Set-Location -Path $workDir
-
-Remove-Item .\3H-Informatica-ConErrori.csv
-Remove-Item .\3H-Informatica-SenzaErrori.csv
-
-Get-ChildItem -Filter *KO.csv -Recurse | Select-Object -ExpandProperty FullName | Import-Csv  | Export-Csv .\3H-Informatica-ConErrori.csv -NoTypeInformation -Append 
-Get-ChildItem -Filter *OK.csv -Recurse | Select-Object -ExpandProperty FullName | Import-Csv  | Export-Csv .\3H-Informatica-SenzaErrori.csv -NoTypeInformation -Append
-
-$ConErrori = Import-Csv .\3H-Informatica-ConErrori.csv
-$SenzaErrori = Import-Csv .\3H-Informatica-SenzaErrori.csv
-($ConErrori + $SenzaErrori) | Sort-Object -Property Alunno | Export-Csv .\3H-Informatica-PerAlunno.csv -NoTypeInformation
-($ConErrori + $SenzaErrori) | Sort-Object -Property Progetto, Alunno | Export-Csv .\3H-Informatica-PerProgetto.csv -NoTypeInformation
-($ConErrori + $SenzaErrori) | Sort-Object -Property Progetto, Risultato, Alunno | Export-Csv .\3H-Informatica-PerProgettoRisultato.csv -NoTypeInformation
+Esporta-CSV 3H Informatica
 
 # Chiude le danze
-Set-Location -Path $attuale
 Stop-Transcript
 
