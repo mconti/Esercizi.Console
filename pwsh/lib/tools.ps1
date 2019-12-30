@@ -5,77 +5,63 @@
 # general purpose funcions and utility
 #
 
-function Print-Footer
-{    
-    Write-host ""
-    Write-Host "Compito:" $PROGETTO"."$ESTENSIONE
-    Write-host "Previsti: "$numeroAlunni
-    Write-Host "Consegnati:" $numeroFile
-    Write-Host "Ritardo:" $numeroFileFuoriTempo
-    Write-Host "Mancanti:" ($numeroAlunni-$numeroFile-$numeroFileFuoriTempo)
-    Write-host "- - - - - - - - - - - - - - - - - -"
-}
-
-function Print-Header 
-{
-    Write-host ""
-    Write-Host "Compito:" $PROGETTO"."$ESTENSIONE
-    Write-host "Sorgente:" $ROOT_SORGENTE\$PROGETTO
-    Write-host "Destinazione:" $PRJ_DEST_DIR
-    Write-host "Valido dal:" $VALIDITA_DAL " al: " $VALIDITA_AL
-    Write-host ""
-    Write-host "Legenda:"
-    Write-host "- - - - - - - - - - - - - - - - - -"
-    Write-host "Presente" -foreground $OK_Color
-    Write-host "Non Presente" -foreground $Wrong_Color
-    Write-host "Ritardo (non ritirato)" -foreground $TooLateNotAccepted_Color
-    Write-host "Ritardo (accettato ugualmente)" -foreground $TooLateAccepted_Color
-    Write-host "Troppo grande!" -Background $TooBig_Color
-    Write-host "Nomi (1) presenti" -BackgroundColor $DoubleDelivery_Color
-    Write-host "- - - - - - - - - - - - - - - - - -"
-}
-
 #
+
 # 
 #
+
 function Ritira-Compito {
-    param( [string]$CLASSE, [string]$MATERIA, [string]$PROGETTO )
 
-    # Impone che stia girando PWSH
-    #Requires -PSEdition Core
+    [CmdletBinding()]
+    [OutputType("Void")]
+    param( [string]$NOME_CLASSE, [string]$MATERIA, [string]$NPROGETTO )
 
-    if ( $PSVersionTable.Platform -eq "Unix" )
-    {
-        # path macbook
-        Write-Host "Sono su mac"
-        $ROOT="/Volumes/GoogleDrive/Il mio Drive/Classroom"
-        $ROOT_DESTINAZIONE="/Users/maurizio/Desktop/"
+    # Inizializza $CLASSE
+    . ($ScriptDirectory + "/settings/" + $NOME_CLASSE + "-" + $MATERIA + ".ps1")        
+    
+    # Seleziona progetto
+    $attivo = Get-Progetto $NPROGETTO
+    $PROGETTO = $attivo.Nome
+    $VALIDITA_DAL = (Get-Date ($attivo.Dal))
+    $VALIDITA_AL = (Get-Date ($attivo.Al))
+    $DATA = (Get-Date -format yy)+(Get-Date -format MM)+(Get-Date -format dd)+(Get-Date -format HH)
+    $VOTO_MINIMO = $attivo.Minimo
+    $VOTO_MASSIMO = $attivo.Massimo
+    
+    # Verifica le path necessarie
+    if ((Test-Path $ROOT) -eq $true) {
+        Write-Host "Trovata la cartella sorgente $ROOT" -foreground $OK_Color
+        $ROOT_SORGENTE = ($ROOT + "/" + $CLASSE.LOCAL)
+
+        if ((Test-Path $ROOT_SORGENTE) -eq $true) {
+            Write-Host "Trovata la cartella della classe "$CLASSE.LOCAL -foreground $OK_Color
+    
+            $DesktopPath = [Environment]::GetFolderPath("Desktop")
+            Write-Host "La cartella di destinazione sarà $DesktopPath" -foreground $OK_Color
+
+            $PRJ_DEST_DIR = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO + "/" + $DATA
+            $CSV_DEST_DIR = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO
+            $PRJ_DEST_DIR_RITARDO = $DesktopPath + "/Consegnati/" + $CLASSE.NOME + "/" + $CLASSE.MATERIA + "/" + $PROGETTO + "/" + $DATA + "R"
+        }
+        else {
+            Write-Host "Cartella della classe "$CLASSE.LOCAL"non trovata." -foreground $Wrong_Color
+            Write-host "Controllare il proprio classroom" -foreground $Wrong_Color
+            Exit
+        }
     }
-    else 
-    {
-        Write-Host "Sono su windows"
-        # path windows10 casa mia
-        $ROOT="D:\Il mio Drive\Classroom"
-        $ROOT_DESTINAZIONE="C:\Users\posta\Desktop\"
+    else {
+        Write-Host "Cartella sorgente $ROOT non trovata" -foreground $Wrong_Color
+        Write-host "E' necessario installare Google Drive File Stream sul tuo PC" -foreground $Wrong_Color
+        Exit
     }
 
-    # Include 
-    . ($ScriptDirectory + "\settings\" + $CLASSE + "-" + $MATERIA + ".ps1")
-    . ($ScriptDirectory + "\settings\" + "global.ps1")
-    . ($ScriptDirectory + "\lib\" + "Write-PSObject.ps1")
-
-    #
-    # main
-    #
-    $numeroAlunni=0
-    $numeroFile=0
-    $numeroFileFuoriTempo=0
-
+    # Messaggio iniziale
     Print-Header 
-
+    
     # Cancella la vecchia directory 
     if ((Test-Path $PRJ_DEST_DIR) -eq $true) {
         Remove-Item -LiteralPath $PRJ_DEST_DIR -Force -Recurse
+        Write-Host "Cancello " + $PRJ_DEST_DIR
     }
 
     # Memorizza la posizone della PATH attuale (alla fine la recupera)
@@ -83,23 +69,29 @@ function Ritira-Compito {
     
     # Risultati
     $Risultati = New-Object System.Collections.ArrayList
+    $RisultatiKO = New-Object System.Collections.ArrayList
+
+
+    # Cancella la directory delle vecchie correzioni 
+    if ((Test-Path $CSV_DEST_DIR) -eq $true) {
+        Remove-Item -LiteralPath $CSV_DEST_DIR -Force -Recurse
+    }
 
     # Punta al file di ogni alunno e lo copia nella destinazione
-    foreach( $alunno in $ALUNNI )
+    foreach( $alunno in $CLASSE.ALUNNI )
     {
         $numeroAlunni++
-        #$SOURCE_FILE = $CLASSE + "\" + $alunno + "\" + $alunno + "." + $CLASSE + "." + $PROGETTO + "." + $ESTENSIONE
-        $SOURCE_FILE = $alunno + "." + $CLASSE + "." + $PROGETTO + "." + $ESTENSIONE
-        $SOURCE = $ROOT_SORGENTE + "\" + $PROGETTO + "\" + $SOURCE_FILE
+        #$SOURCE_FILE = $NOME_CLASSE + "\" + $alunno + "\" + $alunno + "." + $NOME_CLASSE + "." + $PROGETTO + "." + $ESTENSIONE
+        $SOURCE_FILE = $alunno + "." + $CLASSE.NOME + "." + $PROGETTO + "." + $ESTENSIONE
+        $SOURCE = $ROOT_SORGENTE + "/" + $PROGETTO + "/" + $SOURCE_FILE
         
         # Se il file sorgente è stato duplicato ... ( ha (1) nel nome del file )
-        #$SOURCE_FILE_01 = $CLASSE + "\" + $alunno + "\" + $alunno + "." + $CLASSE + "." + $PROGETTO + " (1)." + $ESTENSIONE
+        #$SOURCE_FILE_01 = $NOME_CLASSE + "\" + $alunno + "\" + $alunno + "." + $NOME_CLASSE + "." + $PROGETTO + " (1)." + $ESTENSIONE
         #$SOURCE_01 = $ROOT_SORGENTE + "\" + $SOURCE_FILE_01
         #if ((Test-Path $SOURCE_01) -eq $true) {
         #    Write-host ("{0}{1}$TAB({2})" -f (Get-ChildItem $SOURCE_01).BaseName, (Get-ChildItem $SOURCE_01).Extension, (Get-ChildItem $SOURCE).LastWriteTime) -ForegroundColor $DoubleDelivery_Color
         #    continue
         #}
-
 
         # Verifica validità della consegna
         # Se il file sorgente esiste...
@@ -119,32 +111,36 @@ function Ritira-Compito {
 
             # Gestione file enormi...
             if( ((Get-ChildItem $SOURCE).Length) -lt 5000000 ) {
+
+                # Compito trovato
+                write-host ("{0}" -f $SOURCE_FILE) -foreground $Ok_Color
+
                 # Crea la directory di destinazione pulita
-                New-Item -ItemType Directory -Path $PRJ_DEST_DIR\$alunno -Force | Out-Null
+                New-Item -ItemType Directory -Path $PRJ_DEST_DIR/$alunno -Force | Out-Null
                 
                 # Dezippa il file nella destinazione
-                Expand-Archive -LiteralPath $SOURCE -DestinationPath $PRJ_DEST_DIR\$alunno -Force
+                Expand-Archive -LiteralPath $SOURCE -DestinationPath $PRJ_DEST_DIR/$alunno -Force
             
                 # Cerca il .csproj
-                $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
+                $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR/$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
 
                 # Se non lo trovo, segnalo in rosso
                 if( $sorgenteConPath -eq $null ){
                     Write-host ("Manca .csproj {0}" -f (Get-ChildItem $sorgenteConPath)) -ForegroundColor $TooLateAccepted_Color
                 }
                 else {
-                    # Copia i file nella giusta posizione
-                    # per sistemare quelli che hanno consegnato in directory annidate  
-                    $tutti_i_file_estratti = (Split-Path $sorgenteConPath) + "\*.*"
-                    $destinazione = $PRJ_DEST_DIR + "\" + $alunno
-
-                    Move-Item -Path $tutti_i_file_estratti -Destination $destinazione
+                    # Sistema quelli che hanno consegnato in directory annidate  
+                    $destinazione = $PRJ_DEST_DIR + "/" + $alunno
+                    if( $destinazione -ne (Split-Path $sorgenteConPath) ){
+                        $tutti_i_file_estratti = (Split-Path $sorgenteConPath) + "/*.*"
+        
+                        # Porta su la vecchia directory 
+                        Move-Item -Path $tutti_i_file_estratti -Destination $destinazione
+        
+                        # Cancella la vecchia directory 
+                        Remove-Item -LiteralPath (Split-Path $sorgenteConPath)  -Force -Recurse
+                    }
                 
-                    # Cancella la vecchia directory 
-                    Remove-Item -LiteralPath (Split-Path $sorgenteConPath)  -Force -Recurse
-
-                    Write-host ("{0}{1}$TAB({2})" -f (Get-ChildItem $SOURCE).BaseName, (Get-ChildItem $SOURCE).Extension, (Get-ChildItem $SOURCE).LastWriteTime) -ForegroundColor $OK_Color
-
                     Set-Location -Path $PRJ_DEST_DIR
 
                     # Crea la solution se manca
@@ -154,75 +150,71 @@ function Ritira-Compito {
                     #    #Write-host ("Creo sln... ") -ForegroundColor $Test_Color
                     #}
 
-                    # Cerca il .csproj nella nuova posizione 
-                    # e gli da il nome dell'alunno 
+                    # Ri-Cerca il .csproj nella nuova posizione e gli da il nome dell'alunno 
                     $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
                     Rename-Item -Path $sorgenteConPath -NewName ($alunno + ".csproj.old")
 
                     # Copia nella dir, il csproj per i test
-                    $csprojFile = ($ScriptDirectory + "\resource\csproj\v1.csproj")
-                    Copy-Item -Path $csprojFile -Destination ($PRJ_DEST_DIR + "\" + $alunno + "\" + $alunno + ".csproj")
+                    $csprojFile = ($ScriptDirectory + "/resource/csproj/v1.csproj")
+                    Copy-Item -Path $csprojFile -Destination ($PRJ_DEST_DIR + "/" + $alunno + "/" + $alunno + ".csproj")
                     
                     # Copia nella dir, il runsettings per i test
-                    $runSettingFile = ($ScriptDirectory + "\resource\runsettings\test.runsettings")
+                    $runSettingFile = ($ScriptDirectory + "/resource/runsettings/test.runsettings")
                     Copy-Item -Path $runSettingFile -Destination $PRJ_DEST_DIR\$alunno
 
                     # Lancia il build
                     $csprojectFile = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
-                    Write-host ("Progetto " + $csprojectFile) -ForegroundColor $Test_Color
-                    dotnet build $csprojectFile
+                    # Write-host ("Progetto " + $csprojectFile) -ForegroundColor $Test_Color
+                    dotnet build $csprojectFile | Out-Null
 
                     # se &? è true, il comando è riuscito
                     if( $? ){
                         
                         # Crea la cartella dei risultati di test
-                        New-Item -ItemType directory -Path ($PRJ_DEST_DIR + "\" + $alunno + "\TestResults")
+                        New-Item -ItemType directory -Path ($PRJ_DEST_DIR + "/" + $alunno + "/TestResults") | Out-Null
                         
                         # Lancia i test generando i file html
                         $loggerParam = "--logger:"+'"'+"html" + '"'
-                        dotnet test $csprojectFile -s ($PRJ_DEST_DIR + "\" + $alunno + "\test.runsettings") $loggerParam
+                        dotnet test $csprojectFile -s ($PRJ_DEST_DIR + "/" + $alunno + "/test.runsettings") $loggerParam | Out-Null
                         
                         # Cerca il file html e lo rinomina cognome.nome.gli da il nome dell'alunno 
                         $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.html") -Recurse -ErrorAction SilentlyContinue -Force
                         if( $sorgenteConPath -ne $NULL ) {
-                            Rename-Item -Path $sorgenteConPath -NewName ( $alunno + "." + $CLASSE + "." + $PROGETTO + ".html")
+                            Rename-Item -Path $sorgenteConPath -NewName ( $alunno + "." + $NOME_CLASSE + "." + $PROGETTO + ".html")
                         }
 
                         # Lancia i test generando il file .trx
                         #$loggerParam = "--logger:"+'"'+"trx;LogFileName=" + ($PRJ_DEST_DIR + "\" + $alunno + "\logFile.trx") + '"'
                         #$loggerParam = "--logger html"
                         $loggerParam = "--logger:"+'"'+"trx" + '"'
-                        dotnet test $csprojectFile -s ($PRJ_DEST_DIR + "\" + $alunno + "\test.runsettings") $loggerParam
-
+                        $commandLine = "dotnet test $csprojectFile -s $PRJ_DEST_DIR\$alunno\test.runsettings " + $loggerParam 
+                        dotnet test $csprojectFile -s ($PRJ_DEST_DIR + "/" + $alunno + "/test.runsettings") $loggerParam | Out-Null
+                        
+                        #Set-Location -Path $attuale
+                        #return
+                        
                         # parse del file trx 
                         $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR\$alunno -Filter ("*.trx") -Recurse -ErrorAction SilentlyContinue -Force
                         if( $sorgenteConPath -ne $NULL ) {
                             [xml]$testResults = Get-Content -Path $sorgenteConPath
 
-                            if( $compitoInRitardo ) {
-                                $statoDelCompito = "Too late"
-                            }
-                            else {
-                                $statoDelCompito = $testResults.TestRun.ResultSummary.outcome
-                            }
-
                             $tr = @{
                                 Alunno       = $alunno
-                                Classe       = $CLASSE
+                                Classe       = $CLASSE.NOME
                                 Consegna     = $strDataConsegna
                                 Scadenza     = $strDataScadenza
                                 Progetto     = $PROGETTO
-                                Materia      = $MATERIA
-                                Risultato    = $statoDelCompito
+                                Materia      = $CLASSE.MATERIA
+                                Risultato    = Get-StatoCompito $testResults $compitoInRitardo
                                 Quanti       = $testResults.TestRun.ResultSummary.Counters.total
                                 Passati      = $testResults.TestRun.ResultSummary.Counters.passed
                                 Falliti      = $testResults.TestRun.ResultSummary.Counters.failed
                                 Errori       = $testResults.TestRun.ResultSummary.RunInfos.RunInfo.outcome
+                                Voto         = Get-Voto $testResults
                                 Timeout      = $TestRun.ResultSummary.Counters.timeout
                             }                                    
                             $risultato = New-Object PSObject -Property $tr 
                             $Risultati.Add($risultato) | Out-Null
-                            #$Risultati
 
                             #  Set-Location -Path $attuale
                             #  return
@@ -236,20 +228,22 @@ function Ritira-Compito {
                         Write-host ( "{0}{1}$TAB({2})$TAB({3})" -f (Get-ChildItem $SOURCE).BaseName, (Get-ChildItem $SOURCE).Extension, (Get-ChildItem $SOURCE).LastWriteTime, (Get-ChildItem $SOURCE).Length) -BackgroundColor $Wrong_Color
                         $tr = @{
                             Alunno       = $alunno
-                            Classe       = $CLASSE
+                            Classe       = $CLASSE.NOME
                             Consegna     = $strDataConsegna
                             Scadenza     = $strDataScadenza
                             Progetto     = $PROGETTO
-                            Materia      = $MATERIA
+                            Materia      = $CLASSE.MATERIA
                             Risultato    = "Not compiled"
                             Quanti       = "0"
                             Passati      = "0"
                             Falliti      = "0"
                             Errori       = "0"
+                            Voto         = "{0:N1}" -f $VOTO_MINIMO
                             Timeout      = "0"
                         }
                         $risultato = New-Object PSObject -Property $tr 
                         $Risultati.Add($risultato) | Out-Null
+                        $RisultatiKO.Add($risultato) | Out-Null
                     }
                 }
                 
@@ -261,20 +255,22 @@ function Ritira-Compito {
                 Write-host ( "{0}{1}$TAB({2})$TAB({3})" -f (Get-ChildItem $SOURCE).BaseName, (Get-ChildItem $SOURCE).Extension, (Get-ChildItem $SOURCE).LastWriteTime, (Get-ChildItem $SOURCE).Length) -BackgroundColor $TooBig_Color
                 $tr = @{
                     Alunno       = $alunno
-                    Classe       = $CLASSE
+                    Classe       = $CLASSE.NOME
                     Consegna     = $strDataConsegna
                     Scadenza     = $strDataScadenza
                     Progetto     = $PROGETTO
-                    Materia      = $MATERIA
+                    Materia      = $CLASSE.MATERIA
                     Risultato    = "Too big"
                     Quanti       = "0"
                     Passati      = "0"
                     Falliti      = "0"
                     Errori       = "0"
+                    Voto         = "{0:N1}" -f $VOTO_MINIMO
                     Timeout      = "0"  
                 }
                 $risultato = New-Object PSObject -Property $tr 
                 $Risultati.Add($risultato) | Out-Null
+                $RisultatiKO.Add($risultato) | Out-Null
             }
 
             $numeroFile++
@@ -285,32 +281,45 @@ function Ritira-Compito {
 
             $tr = @{
                 Alunno       = $alunno
-                Classe       = $CLASSE
+                Classe       = $CLASSE.NOME
                 Consegna     = $strDataConsegna
                 Scadenza     = $strDataScadenza
                 Progetto     = $PROGETTO
-                Materia      = $MATERIA
+                Materia      = $CLASSE.MATERIA
                 Risultato    = "Not found"
                 Quanti       = "0"
                 Passati      = "0"
                 Falliti      = "0"
                 Errori       = "0"
+                Voto         = "{0:N1}" -f $VOTO_MINIMO
                 Timeout      = "0"
             }
             $risultato = New-Object PSObject -Property $tr 
             $Risultati.Add($risultato) | Out-Null
+            $RisultatiKO.Add($risultato) | Out-Null
         }
     }
 
     # Esporta CSV
-    $Risultati | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Quanti, Passati, Falliti, Errori, Timeout |  `
-    Export-Csv -Path ($PRJ_DEST_DIR + "\" + $CLASSE + "." + $PROGETTO + ".csv") -NoTypeInformation
+    if ((Test-Path $CSV_DEST_DIR) -ne $true) {
+        # Se la cartella non esiste, tocca crearla
+        # E' il caso in cui nessuno consegna...
+        New-Item -ItemType Directory -Path $CSV_DEST_DIR -Force | Out-Null
+    }
+    
+    # Esporta risultati OK
+    $Risultati | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout |  `    
+    Export-Csv -Path ($CSV_DEST_DIR + "/" + $CLASSE.NOME + "." + $PROGETTO + "OK.csv") -NoTypeInformation
+
+    # Esporta risultati KO
+    $RisultatiKO | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout |  `    
+    Export-Csv -Path ($CSV_DEST_DIR + "/" + $CLASSE.NOME + "." + $PROGETTO + "KO.csv") -NoTypeInformation
     
     #$Risultati | Format-Table Classe, Progetto, Alunno, Consegna, Scadenza, Risultato, Passati, Quanti
     #Write-PSObject ($Risultati | Select-Object -Property Classe, Progetto, Alunno, Scadenza, Risultato, Passati, Quanti) -MatchMethod Exact -Column Risultato -Value "Not found" -ValueForeColor Red -FlagColumns "'Alunno'" -FlagsForeColor Red;
 
     # Visualizza a video...    
-    Write-PSObject ($Risultati | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Quanti, Passati, Falliti, Errori, Timeout) `
+    Write-PSObject ($Risultati | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout) `
     -MatchMethod Exact, Exact, Exact, Exact, Exact, Exact `
     -Column 'Risultato', 'Risultato', 'Risultato', 'Risultato', 'Risultato', 'Risultato' `
     -Value "Not found", "Too late", "Too big", "Not compiled", "Failed", "Completed"  `
@@ -319,4 +328,96 @@ function Ritira-Compito {
     -FlagsForeColor Red, Yellow, Red, Red, Yellow, Green 
 
     Set-Location -Path $attuale
+}
+
+function Print-Footer
+{    
+    Write-host ""
+    Write-Host "Compito:" $PROGETTO"."$ESTENSIONE
+    Write-host "Previsti: "$numeroAlunni
+    Write-Host "Consegnati:" $numeroFile
+    Write-Host "Ritardo:" $numeroFileFuoriTempo
+    Write-Host "Mancanti:" ($numeroAlunni-$numeroFile-$numeroFileFuoriTempo)
+    Write-host "- - - - - - - - - - - - - - - - - -"
+}
+
+function Print-Header 
+{
+    Write-host ""
+    Write-Host "Compito:" $PROGETTO"."$ESTENSIONE
+    Write-host "Valido dal $VALIDITA_DAL al $VALIDITA_AL"
+    Write-Host "Voto dal $VOTO_MINIMO al $VOTO_MASSIMO"
+    Write-host "Sorgente:" $ROOT_SORGENTE/$PROGETTO
+    Write-host "Cartella della correzione: $PRJ_DEST_DIR"
+    Write-host ""
+    #Write-host "Legenda:"
+    #Write-host "- - - - - - - - - - - - - - - - - -"
+    #Write-host "Presente" -foreground $OK_Color
+    #Write-host "Non Presente" -foreground $Wrong_Color
+    #Write-host "Ritardo (non ritirato)" -foreground $TooLateNotAccepted_Color
+    #Write-host "Ritardo (accettato ugualmente)" -foreground $TooLateAccepted_Color
+    #Write-host "Troppo grande!" -Background $TooBig_Color
+    #Write-host "Nomi (1) presenti" -BackgroundColor $DoubleDelivery_Color
+    #Write-host "- - - - - - - - - - - - - - - - - -"
+}
+
+#
+#
+#
+function Get-Progetto {
+
+    [CmdletBinding()]
+    param( [string]$NPROGETTO )
+
+    $idx=0
+    foreach( $p in (Progetti) ){
+        if( $p.Nome -eq $NPROGETTO ) {
+           break;
+        }
+        $idx++
+    }
+
+    if ($idx -lt (Progetti).Count ) {
+        $attivo=(Progetti)[$idx]
+        #Write-host "Trovato progetto $NPROGETTO (indice $idx)."  -foreground $OK_Color
+        return $attivo
+    }
+    else {
+        Write-host "Progetto $NPROGETTO non trovato, aggiornare elenco progetti."  -foreground $Wrong_Color
+        Exit
+    }
+}
+
+#
+#
+#
+function Get-Voto {
+
+    [CmdletBinding()]
+    param( $testResults )
+
+    $VOTO = $testResults.TestRun.ResultSummary.Counters.passed / $testResults.TestRun.ResultSummary.Counters.total
+    $VOTO1 = ($VOTO_MASSIMO-$VOTO_MINIMO)*$VOTO+$VOTO_MINIMO
+    return "{0:N1}" -f $VOTO1
+}
+
+function Get-StatoCompito {
+
+    [CmdletBinding()]
+    param( $testResults, $compitoInRitardo )
+
+    if( $compitoInRitardo ) {
+        $statoDelCompito = "Too late"
+    }
+    else {
+        $dueTerzi = $testResults.TestRun.ResultSummary.Counters.passed/$testResults.TestRun.ResultSummary.Counters.total
+        if( $dueTerzi -lt 0.55 ){
+            $statoDelCompito = $testResults.TestRun.ResultSummary.outcome
+        }
+        else{
+            $statoDelCompito = "Completed"
+        }
+    }
+
+    return $statoDelCompito
 }
