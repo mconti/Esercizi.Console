@@ -121,6 +121,13 @@ function Ritira-Compito {
                 # Dezippa il file nella destinazione
                 Expand-Archive -LiteralPath $SOURCE -DestinationPath $PRJ_DEST_DIR/$alunno -Force
             
+                # Elimina lartelle del MAC che danno fastidio
+                $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR/$alunno -Filter ("__MACOSX") -Recurse -ErrorAction SilentlyContinue -Force
+                
+                if( $sorgenteConPath -ne $null ){
+                    Remove-Item -LiteralPath ((Split-Path $sorgenteConPath) + "/__MACOSX") -Force -Recurse
+                }
+                        
                 # Cerca il .csproj
                 $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR/$alunno -Filter ("*.csproj") -Recurse -ErrorAction SilentlyContinue -Force
 
@@ -133,7 +140,6 @@ function Ritira-Compito {
                     $destinazione = $PRJ_DEST_DIR + "/" + $alunno
                     if( $destinazione -ne (Split-Path $sorgenteConPath) ){
                         $tutti_i_file_estratti = (Split-Path $sorgenteConPath) + "/*.*"
-        
                         # Porta su la vecchia directory 
                         Move-Item -Path $tutti_i_file_estratti -Destination $destinazione
         
@@ -155,7 +161,7 @@ function Ritira-Compito {
                     Rename-Item -Path $sorgenteConPath -NewName ($alunno + ".csproj.old")
 
                     # Copia nella dir, il csproj per i test
-                    $csprojFile = ($ScriptDirectory + "/resource/csproj/v1.csproj")
+                    $csprojFile = ($ScriptDirectory + "/resource/csproj/v2.csproj")
                     Copy-Item -Path $csprojFile -Destination ($PRJ_DEST_DIR + "/" + $alunno + "/" + $alunno + ".csproj")
                     
                     # Copia nella dir, il runsettings per i test
@@ -214,10 +220,14 @@ function Ritira-Compito {
                                 Timeout      = $TestRun.ResultSummary.Counters.timeout
                             }                                    
                             $risultato = New-Object PSObject -Property $tr 
-                            $Risultati.Add($risultato) | Out-Null
 
-                            #  Set-Location -Path $attuale
-                            #  return
+                            # Se i test passati sono > 0 OK... altrimenti KO
+                            if( $testResults.TestRun.ResultSummary.Counters.passed -gt 0 ){
+                                $Risultati.Add($risultato) | Out-Null
+                            }
+                            else {
+                                $RisultatiKO.Add($risultato) | Out-Null                                
+                            }
                         }
                         
                         # decommentare per aggiungere  il nuovo .csproj alla solution
@@ -242,7 +252,6 @@ function Ritira-Compito {
                             Timeout      = "0"
                         }
                         $risultato = New-Object PSObject -Property $tr 
-                        $Risultati.Add($risultato) | Out-Null
                         $RisultatiKO.Add($risultato) | Out-Null
                     }
                 }
@@ -269,7 +278,6 @@ function Ritira-Compito {
                     Timeout      = "0"  
                 }
                 $risultato = New-Object PSObject -Property $tr 
-                $Risultati.Add($risultato) | Out-Null
                 $RisultatiKO.Add($risultato) | Out-Null
             }
 
@@ -295,7 +303,6 @@ function Ritira-Compito {
                 Timeout      = "0"
             }
             $risultato = New-Object PSObject -Property $tr 
-            $Risultati.Add($risultato) | Out-Null
             $RisultatiKO.Add($risultato) | Out-Null
         }
     }
@@ -314,12 +321,16 @@ function Ritira-Compito {
     # Esporta risultati KO
     $RisultatiKO | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout |  `    
     Export-Csv -Path ($CSV_DEST_DIR + "/" + $CLASSE.NOME + "." + $PROGETTO + "KO.csv") -NoTypeInformation
+
+    # Esporta Tutti i risultati
+    ($Risultati + $RisultatiKO) | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout | Sort-Object -Property Alunno | `    
+    Export-Csv -Path ($CSV_DEST_DIR + "/" + $CLASSE.NOME + "." + $PROGETTO + ".csv") -NoTypeInformation
     
     #$Risultati | Format-Table Classe, Progetto, Alunno, Consegna, Scadenza, Risultato, Passati, Quanti
     #Write-PSObject ($Risultati | Select-Object -Property Classe, Progetto, Alunno, Scadenza, Risultato, Passati, Quanti) -MatchMethod Exact -Column Risultato -Value "Not found" -ValueForeColor Red -FlagColumns "'Alunno'" -FlagsForeColor Red;
 
     # Visualizza a video...    
-    Write-PSObject ($Risultati | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout) `
+    Write-PSObject (($Risultati + $RisultatiKO) | Select-Object -Property Classe, Progetto, Consegna, Scadenza, Alunno, Risultato, Voto, Quanti, Passati, Falliti, Errori, Timeout) `
     -MatchMethod Exact, Exact, Exact, Exact, Exact, Exact `
     -Column 'Risultato', 'Risultato', 'Risultato', 'Risultato', 'Risultato', 'Risultato' `
     -Value "Not found", "Too late", "Too big", "Not compiled", "Failed", "Completed"  `
@@ -396,9 +407,12 @@ function Get-Voto {
     [CmdletBinding()]
     param( $testResults )
 
-    $VOTO = $testResults.TestRun.ResultSummary.Counters.passed / $testResults.TestRun.ResultSummary.Counters.total
-    $VOTO1 = ($VOTO_MASSIMO-$VOTO_MINIMO)*$VOTO+$VOTO_MINIMO
-    return "{0:N1}" -f $VOTO1
+    if( $testResults.TestRun.ResultSummary.Counters.total -ne 0) {
+        $VOTO = $testResults.TestRun.ResultSummary.Counters.passed / $testResults.TestRun.ResultSummary.Counters.total
+        $VOTO1 = ($VOTO_MASSIMO-$VOTO_MINIMO)*$VOTO+$VOTO_MINIMO
+        return "{0:N1}" -f $VOTO1
+    }
+    return "{0:N1}" -f $VOTO_MINIMO
 }
 
 function Get-StatoCompito {
@@ -410,12 +424,17 @@ function Get-StatoCompito {
         $statoDelCompito = "Too late"
     }
     else {
-        $dueTerzi = $testResults.TestRun.ResultSummary.Counters.passed/$testResults.TestRun.ResultSummary.Counters.total
-        if( $dueTerzi -lt 0.55 ){
-            $statoDelCompito = $testResults.TestRun.ResultSummary.outcome
+        if( $testResults.TestRun.ResultSummary.Counters.total -ne 0) {
+            $dueTerzi = $testResults.TestRun.ResultSummary.Counters.passed/$testResults.TestRun.ResultSummary.Counters.total
+            if( $dueTerzi -lt 0.55 ){
+                $statoDelCompito = $testResults.TestRun.ResultSummary.outcome
+            }
+            else{
+                $statoDelCompito = "Completed"
+            }
         }
-        else{
-            $statoDelCompito = "Completed"
+        else {
+            $statoDelCompito = $testResults.TestRun.ResultSummary.outcome
         }
     }
 
