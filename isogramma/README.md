@@ -25,3 +25,5 @@ P	A	T	H	F	I	N	D	E	R
 Ammettiamo che il prezzo indicato fosse 1200 € ma nel cartellino ci fossero anche le lettere FRR, il venditore saprebbe che il prezzo originale era 500 € in modo da non scendere sotto quella soglia.
 
 Un isogramma di 12 lettere si può usare per mappare i mesi dell'anno.
+
+[Wikipedia sugli Isogrammi](https://it.wikipedia.org/wiki/Isogramma)
