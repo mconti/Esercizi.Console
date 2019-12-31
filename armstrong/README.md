@@ -1,6 +1,6 @@
 # Numeri di Armstrong
 
-Un [Numero di Armstrong](https://en.wikipedia.org/wiki/Narcissistic_number) è un numero che si calcola come somma di ogni sua cifra, elevata alla potenza del numero di digit.
+Un [Numero di Armstrong](https://en.wikipedia.org/wiki/Narcissistic_number) è un numero che si calcola elevando alla potenza del numero di digit ogni sua cifra e facendone poi la somma.
 
 Ad esempio:
 
