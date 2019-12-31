@@ -19,6 +19,7 @@ Isogrammi di 10 lettere, per esempio PATHFINDER, DUMBWAITER o BLACKHORSE, posson
 Per esempio le cifre decimali possono essere mappate secondo questo schema:
 
 P	A	T	H	F	I	N	D	E	R
+
 1	2	3	4	5	6	7	8	9	0
 
 Ammettiamo che il prezzo indicato fosse 1200 € ma nel cartellino ci fossero anche le lettere FRR, il venditore saprebbe che il prezzo originale era 500 € in modo da non scendere sotto quella soglia.
