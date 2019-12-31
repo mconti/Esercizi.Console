@@ -13,10 +13,13 @@ La somma aliquota è definita come la somma dei fattori di un numero che non inc
 > 28 è un numero perfetto perché (1 + 2 + 4 + 7 + 14) = 28
 
 
-> **Abbondante:** quando la somma aliquota è maggiore del numero - 
-> - 12 è un numero abbondante perché (1 + 2 + 3 + 4 + 6) = 16
-> - 24 è un numero abbondante perché (1 + 2 + 3 + 4 + 6 + 8 + 12) = 36
-
+> **Abbondante:** quando la somma aliquota è maggiore del numero
+```
+12 è un numero abbondante perché (1 + 2 + 3 + 4 + 6) = 16
+```
+```
+24 è un numero abbondante perché (1 + 2 + 3 + 4 + 6 + 8 + 12) = 36
+```
 
 > **Scarso:** quando la somma aliquota è minore del numero
 > - 8 è un numero scarso perché (1 + 2 + 4) = 7
