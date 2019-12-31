@@ -8,11 +8,11 @@ La somma aliquota è definita come la somma dei fattori di un numero che non inc
 
 Ad esempio, la somma aliquota di 15 è (1 + 3 + 5) = 9
 
-> **Perfetto**: quando la somma aliquota è uguale al numero
+> ##Perfetto: quando la somma aliquota è uguale al numero
 >
->> 6 è un numero perfetto perché (1 + 2 + 3) = 6
+> - 6 è un numero perfetto perché (1 + 2 + 3) = 6
 >
->> 28 è un numero perfetto perché (1 + 2 + 4 + 7 + 14) = 28
+> - 28 è un numero perfetto perché (1 + 2 + 4 + 7 + 14) = 28
 >
 
 > **Abbondante**: quando la somma aliquota è maggiore del numero
