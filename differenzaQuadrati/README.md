@@ -1,7 +1,7 @@
 # Differenza di quadrati
 
 - Calcolare il quadrato della somma dei primi N numeri.
-- Calcolare la somma del quadrato dei primi N numeri.
+- Calcolare la somma dei quadrati dei primi N numeri.
 - Fare la differenza tra il primo e il secondo.
 
 Il quadrato della somma per N=10
