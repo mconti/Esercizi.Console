@@ -14,7 +14,7 @@ La loro differenza 3025 - 385 = 2640.
 
 Non è semplice trovare subito una soluzione efficiente a questo problema quindi per ora risolverlo a proprio modo.
 
-E' incoraggiata comunque la ricerca di una soluzione migliore a questo problema ricorrente nell'ingegneria del software.
+E' incoraggiata comunque la ricerca di una soluzione migliore per questo che è un problema ricorrente nell'ingegneria del software.
 
 ## Approfondimenti
 
