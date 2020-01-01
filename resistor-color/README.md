@@ -1,4 +1,4 @@
-# Resistor Color
+# Resistors Colors
 
 *Esercizio non ancora pronto...*
 
