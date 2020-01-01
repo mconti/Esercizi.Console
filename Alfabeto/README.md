@@ -1,4 +1,5 @@
 # Pangramma
+## *(Alfabeto...)*
 
 Esistono frasi molto diffuse in ambito ICT, che sembrano un po’ strane e non si capisce bene come mai vengano usate in modo così frequente.
 
