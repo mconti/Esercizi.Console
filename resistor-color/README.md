@@ -1,5 +1,7 @@
 # Resistor Color
 
+*Esercizio non ancora pronto...*
+
 Le resistenze utilizzate in elettronica, hanno delle bande colorate che servono per identificare il loro valore in ohm.
 
 Ogni colore ha un valore
