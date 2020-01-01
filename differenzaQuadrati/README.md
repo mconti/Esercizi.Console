@@ -1,8 +1,8 @@
 # Differenza di quadrati
 
-Calcolare il quadrato della somma dei primi N numeri.
-Calcolare la somma del quadrato dei primi N numeri.
-Fare la differenza tra il primo e il secondo.
+- Calcolare il quadrato della somma dei primi N numeri.
+- Calcolare la somma del quadrato dei primi N numeri.
+- Fare la differenza tra il primo e il secondo.
 
 Il quadrato della somma per N=10
 (1 + 2 + ... + 10)² = 55² = 3025.
