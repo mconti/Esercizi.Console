@@ -14,8 +14,8 @@ Ogni cartella contiene un esercizio con tre file:
 
 - Scaricare uno di questi zip
 
-| Nome esercizio                                  | Descrizione                                                                                                  |
-|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| Nome esercizio | Descrizione |
+|----|--|
 | [grani](http://bit.ly/2QCgO0r)                  | Conta i chicchi di grano su una schacchiera 8x8                                                              |
 | [collatz](http://bit.ly/collatz19)              | Verifica la congettura di Collatz 3*N+1                                                                      |
 | [NANP](http://bit.ly/NANP19)                    | Verifica se una stringa è conforme al NAtional Numbers Plan americano                                        |
