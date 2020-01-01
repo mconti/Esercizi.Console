@@ -6,8 +6,9 @@ Questo esercizio si basa sul calcolo di questo peso.
 
 Ogni lettera vale un punteggio secondo questa tabella
 
-| a, e, i, o, u, l, n, r, s, t | valgono 1 |
+| Lettera | Valore | 
 |--|--|
+| a, e, i, o, u, l, n, r, s, t | valgono 1 |
 | d, g | valgono 2  |
 | b, c, m, p | valgono 3 |
 | f, h, v, w, y | valgono 4 |
