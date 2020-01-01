@@ -13,6 +13,7 @@ Ogni cartella contiene un esercizio con tre file:
 # Utilizzo
 
 - Scaricare uno di questi zip
+
 | Nome esercizio                   | Descrizione                                                                                                  |
 |----------------------------------|--------------------------------------------------------------------------------------------------------------|
 | [grani](collatz)                 | Conta i chicchi di grano su una schacchiera 8x8                                                              |
@@ -34,6 +35,8 @@ Ogni cartella contiene un esercizio con tre file:
 | [bisestile](armstrong)           | Determinare se un anno è bisestile                                                                           |
 | [armstrong](isogramma)           | Determinare se un numero dato è un numero di Armstrong                                                       |
 | [isogramma]()                    | Determinare se una parola o una frase sia un isogramma (formata da lettere non ripetute)                     |
+
+
 - dezippare il file sul desktop (Mac, Windows, Linux)
 - rinominare la cartella usando questa convenzione **cognome.nome.classe.NomeEsercizio** dove classe di solito è formata da due caratteri (3H, 4H, 5G, ...) ad esempio **conti.maurizio.4H.acronimo**
 - aprire la cartella con VS Code e puntare al file **NomeEsercizio.cs** risolvendolo
