@@ -45,6 +45,8 @@ Ogni cartella contiene un esercizio con tre file:
 | [isogramma](http://bit.ly/37vnEf7) | Determinare se una parola o una frase sia un isogramma (formata da lettere non ripetute) | *medio*, for annidato, array |
 | [differenzaQuadrati](http://bit.ly/39ysLwD) | Differenza tra Somma dei quadrati e Quadrato della somma di N numeri. | *normale*, int, for semplice |
 |   |   |   |
-
-
-
+| [sum-of-multiplies](http://bit.ly/35aLN9K) | Calcola la somma dei multipli di una serie di numeri   | *medio*, int, array, for annidato, valori distinti  |
+| [largest-series-product](http://bit.ly/2rX8znj) | Slice di N caratteri e moltiplicazione tra loro delle cifre. Es. "1027839564",  =  270 (9 * 5 * 6) | *medio*, string, for annidato, Substring(), IsNumber(), evoluzione di  Series |
+| [perfetto](http://bit.ly/2QcIgTq) | Se la somma dei fattori di un numero (escluso il numero) è uguale al numero, si tratta di un numero perfetto | *medio*, array, Enum, cerca fattori |
+| [isogramma](http://bit.ly/37vnEf7) | Determinare se una parola o una frase sia un isogramma (formata da lettere non ripetute) | *medio*, for annidato, array |
+|   |   |   |
