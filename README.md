@@ -2,17 +2,17 @@
 
 Repository utilizzato nelle esercitazioni di laboratorio di C#.
 
-Ogni cartella ha un esercizio con tre file: 
+Ogni cartella contiene un esercizio con tre file: 
 
-*NomeEsercizio.cs*  (da completare) 
+*NomeEsercizio.cs*  l'esercizio da svolgere...
 
-*NomeEsercizioTest.cs* (che contiene i test da superare) 
+*NomeEsercizioTest.cs* che contiene le unit test da superare. Questo file non va alterato in alcun modo. 
 
-*NomeEsercizio.csproj* (che contiene le dipendenze come ad esempio XUnit etc per funzionare) 
+*NomeEsercizio.csproj* che contiene le dipendenze necessarie alla compilazione come le librerie standard di .NET o ad esempio le librerie XUnit per eseguire le unit test.  
 
 # Utilizzo
 
-- Scaricare uno zip di questo 
+- Scaricare uno zip di questo elenco
 
 # Elenco esercizi
 [grani](http://bit.ly/2QCgO0r)
