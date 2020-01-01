@@ -15,7 +15,7 @@ Ogni cartella contiene un esercizio con tre file:
 - Scaricare uno di questi zip
 
 | Nome esercizio | Descrizione | Difficoltà |
-|  |  |  |
+|--|--|--|
 | [bisestile](http://bit.ly/2ZG3WdW) | Determinare se un anno è bisestile | molto semplice, divisore con resto % |
 | [space-age](http://bit.ly/36iIKwr) | Calcola l'età di una persona con 1.000.000.000 di secondi sulla terra (e se vivesse su altri pianeti?) | molto semplice, double |
 |   |   |   |
