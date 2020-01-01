@@ -15,6 +15,19 @@ Ogni cartella contiene un esercizio con tre file:
 - Scaricare uno di questi zip
 
 | Nome esercizio | Descrizione |
+|--|--|
+| [grani](http://bit.ly/2QCgO0r) | Conta i chicchi di grano su una schacchiera 8x8 |
+| [collatz](http://bit.ly/collatz19) | Verifica la congettura di Collatz 3*N+1 |
+| [NANP](http://bit.ly/NANP19) | Verifica se una stringa è conforme al NAtional Numbers Plan americano |
+| [acronimo](http://bit.ly/acronimo19) | Data una frase di n parole, ritorna l'iniziale di ogni parola. |
+| [Alfabeto](http://bit.ly/2P3tYCO) | Verifica che una frase contenga tutte le lettere dell'alfabeto italiano |
+| [pesoLettere](http://bit.ly/2L3PwOn) | Ogni lettera ha un peso. Calcolare il peso di una parola. |
+| [stream](http://bit.ly/2DCPXv2) | Legge una riga da un file, estrae due numeri, visualizza il secondo |
+| [mediaPesata](http://bit.ly/2DGaXkC) | Legge 3 file.txt e calcola la media pesata dei numeri che contengono  |
+| [rna](http://bit.ly/38gy9UJ) | Converte una sequenza di DNA in RNA |
+
+
+| Nome esercizio | Descrizione |
 |----|--|
 | [grani](http://bit.ly/2QCgO0r)                  | Conta i chicchi di grano su una schacchiera 8x8                                                              |
 | [collatz](http://bit.ly/collatz19)              | Verifica la congettura di Collatz 3*N+1                                                                      |
