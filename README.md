@@ -16,10 +16,10 @@ Ogni cartella contiene un esercizio con tre file:
 
 | Nome esercizio | Descrizione | Difficoltà |
 |--|--|--|
-| [bisestile](http://bit.ly/2ZG3WdW) | Determinare se un anno è bisestile | molto semplice, divisore con resto % |
-| [space-age](http://bit.ly/36iIKwr) | Calcola l'età di una persona con 1.000.000.000 di secondi sulla terra (e se vivesse su altri pianeti?) | molto semplice, double |
+| [bisestile](http://bit.ly/2ZG3WdW) | Determinare se un anno è bisestile | *molto semplice*, divisore con resto % |
+| [space-age](http://bit.ly/36iIKwr) | Calcola l'età di una persona con 1.000.000.000 di secondi sulla terra (e se vivesse su altri pianeti?) | *molto semplice*, double |
 |   |   |   |
-| [grani](http://bit.ly/2QCgO0r) | Conta i chicchi di grano su una scacchiera 8x8 | semplice, int, for semplice |
+| [grani](http://bit.ly/2QCgO0r) | Conta i chicchi di grano su una scacchiera 8x8 | *semplice*, int, for semplice |
 | [collatz](http://bit.ly/collatz19) | Verifica la congettura di Collatz 3*N+1 | semplice, int, for semplice |
 | [acronimo](http://bit.ly/acronimo19) | Data una frase di n parole, ritorna l'iniziale di ogni parola. | semplice, string, for semplice, Split() |
 | [Alfabeto](http://bit.ly/2P3tYCO) | Verifica che una frase contenga tutte le lettere dell'alfabeto italiano | semplice, string, for semplice, Contains(char) |
@@ -40,7 +40,7 @@ Ogni cartella contiene un esercizio con tre file:
 | [isogramma](http://bit.ly/37vnEf7) | Determinare se una parola o una frase sia un isogramma (formata da lettere non ripetute) | medio, for annidato, array |
 |  | Somma dei quadrati, Quadrato della somma, Differenza | medio, int, for semplice |
 |   |   |   |
-|  |  |  |
+
 
 - dezippare il file sul desktop (Mac, Windows, Linux)
 - rinominare la cartella usando questa convenzione **cognome.nome.classe.NomeEsercizio** dove classe di solito è formata da due caratteri (3H, 4H, 5G, ...) ad esempio **conti.maurizio.4H.acronimo**
