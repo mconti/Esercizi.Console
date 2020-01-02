@@ -214,6 +214,3 @@ Write-Host "Consegnati:" $numeroFile
 Write-Host "Ritardo:" $numeroFileFuoriTempo
 Write-Host "Mancanti:" ($numeroAlunni-$numeroFile-$numeroFileFuoriTempo)
 Write-host "- - - - - - - - - - - - - - - - - -"
-
-
-#Agyiri.Godfred.Yeboah, Amadori.Alan, Amantini.Davide, Amantini.Federico, Bahri.Yassine, Bartolini.Liam, Battafarano.Giovanni, Bertozzi.Mattia, Bianchi.Monica, Bronzetti.Christian, Caralli.Fabio,,Carnevali.Nicola, Casadei.Samuele, Curzi.Lorenzo, Farneti.Michele, Lu.William,,Mangini.Nicola, Mari.Diego, Mazzoni.Alex, Menghi.Massimo, Paz.Eyal, Qordja.Francesco Petrit, Santarsieri.Andrea, Santi.Federico, Spaccamiglio.Luca
