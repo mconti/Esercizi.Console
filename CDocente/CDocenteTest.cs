@@ -21,5 +21,13 @@ namespace CStudente
             Assert.Equal<string>( "Pini", s.Cognome );
             Assert.Equal<string>( "Marco - Pini", s.ToString() );
         }
+        [Fact]
+        public void test_costruisce_docente_standard_titolo()
+        {
+            Docente s = new Docente( "Marco", "Pini", "prof." );
+            Assert.Equal<string>( "Marco", s.Nome );
+            Assert.Equal<string>( "Pini", s.Cognome );
+            Assert.Equal<string>( "prof. Marco Pini", s.ToString() );
+        }
     }
 }
