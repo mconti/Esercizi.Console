@@ -1,0 +1,5 @@
+Aggiunge package xunit logging
+dotnet add package XunitXml.TestLogger --version 2.1.26
+
+lo usa
+dotnet test Collatz.csproj -s test.runsettings --logger:"xunit;LogFilePath=test_result.xml"
