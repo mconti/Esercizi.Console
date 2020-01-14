@@ -99,8 +99,9 @@ function Ritira-Compito {
     
     # Cancella la vecchia directory 
     if ((Test-Path $PRJ_DEST_DIR) -eq $true) {
-        Remove-Item -LiteralPath $PRJ_DEST_DIR -Force -Recurse
         Write-Host "Cancello " + $PRJ_DEST_DIR
+        #Remove-Item -LiteralPath $PRJ_DEST_DIR -Force -Recurse
+        #Write-Host "Cancello " + $PRJ_DEST_DIR
     }
 
     # Memorizza la posizone della PATH attuale (alla fine la recupera)
@@ -112,7 +113,8 @@ function Ritira-Compito {
 
     # Cancella la directory delle vecchie correzioni 
     if ((Test-Path $PRJ_DEST_DIR) -eq $true) {
-        Remove-Item -LiteralPath $PRJ_DEST_DIR -Force -Recurse
+        Write-Host "Cancello " + $PRJ_DEST_DIR
+        #Remove-Item -LiteralPath $PRJ_DEST_DIR -Force -Recurse
     }
 
     # ... e la ricrea
@@ -126,7 +128,8 @@ function Ritira-Compito {
         # Cerca ed elimina cartelle del MAC che danno fastidio
         $sorgenteConPath = Get-ChildItem -Path $PATH_DEST_ESERCIZIO_ORIGINALE -Filter ("__MACOSX") -Recurse -ErrorAction SilentlyContinue -Force
         if( $sorgenteConPath -ne $null ){
-            Remove-Item -LiteralPath ((Split-Path $sorgenteConPath) + "/__MACOSX") -Force -Recurse
+            Write-Host "Cancello " + $sorgenteConPath
+            #Remove-Item -LiteralPath ((Split-Path $sorgenteConPath) + "/__MACOSX") -Force -Recurse
         }
 
         # Calcola l'HASH del file dei test (per verificare che nessuno lo cambi)
@@ -186,7 +189,8 @@ function Ritira-Compito {
                 # Cerca ed elimina cartelle del MAC che danno fastidio
                 $sorgenteConPath = Get-ChildItem -Path $PRJ_DEST_DIR/$alunno -Filter ("__MACOSX") -Recurse -ErrorAction SilentlyContinue -Force
                 if( $sorgenteConPath -ne $null ){
-                    Remove-Item -LiteralPath ((Split-Path $sorgenteConPath) + "/__MACOSX") -Force -Recurse
+                    Write-Host "Cancello " + $sorgenteConPath
+                    #Remove-Item -LiteralPath ((Split-Path $sorgenteConPath) + "/__MACOSX") -Force -Recurse
                 }
                         
                 if( $LANCIA_TEST -eq "" ) { 
@@ -250,7 +254,8 @@ function Ritira-Compito {
                         Get-ChildItem -Path $tutti_i_file_estratti -Recurse | Move-Item -Destination $destinazione
         
                         # Cancella la vecchia directory 
-                        Remove-Item -LiteralPath (Split-Path $sorgenteConPath)  -Force -Recurse
+                        Write-Host "Cancello " + (Split-Path $sorgenteConPath)
+                        #Remove-Item -LiteralPath (Split-Path $sorgenteConPath)  -Force -Recurse
                     }
                     #$destinazione
                     #(Split-Path $sorgenteConPath)
@@ -751,11 +756,13 @@ function Esporta-CSV
     $NOME_FILE = (".\$NOME_CLASSE-$MATERIA")
      
     if( Test-Path ("$NOME_FILE-ConErrori.csv") ){
-        Remove-Item ("$NOME_FILE-ConErrori.csv")
+        Write-Host "Cancello " + $NOME_FILE-ConErrori.csv
+        #Remove-Item ("$NOME_FILE-ConErrori.csv")
     }
 
     if( Test-Path ("$NOME_FILE-SenzaErrori.csv") ){
-        Remove-Item ("$NOME_FILE-SenzaErrori.csv")
+        Write-Host "Cancello " + $NOME_FILE-SenzaErrori.csv
+        #Remove-Item ("$NOME_FILE-SenzaErrori.csv")
     }
     
     Write-Host ""
