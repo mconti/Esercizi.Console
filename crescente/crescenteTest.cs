@@ -7,7 +7,7 @@ namespace crescente
     public class crescenteTest
     {
         [Fact]
-        public void strettamente_crescente()
+        public void crescente()
         {
             var valori = new[] { 1,2,3,4,5,6,7,8,9,10,11,12 };
             Assert.True(Crescente.Verifica( valori ));
@@ -37,7 +37,13 @@ namespace crescente
         [Fact]
         public void numeri_negativi()
         {
-            var valori = new[] { -3,-2,-1,0,1 };
+            var valori = new[] { -3,-2,-1,0,10 };
+            Assert.True(Crescente.Verifica( valori ));
+        }
+        [Fact]
+        public void strettamente_crescente()
+        {
+            var valori = new[] { 1,30,45,57,68,700 };
             Assert.True(Crescente.Verifica( valori ));
         }
     }
