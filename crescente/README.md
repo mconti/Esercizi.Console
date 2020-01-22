@@ -1,13 +1,30 @@
-# Crescente
+# Sequenza
 
-Dato un vettore V contenente N valori interi dire se tali valori sono strettamente crescenti.
+
+**Premessa**
+
+In questo esercizio si possono usare solo costrutti base del linguaggio e vettori di interi.
+
+Non si possono usare collezioni (List<> etc...) e/o costrutti LINQ.
+
+
+**Testo**
+
+Scrivere un programma che, dato un numero intero N crei un vettore di interi rispettando questa sequenza:
+
+1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,...., N,N,N,N,N,N,N...N .
+
 
 **Esempi:** 
 
-1,2,3,4,5,6,7 - true
+N=2   1,2,2
 
-1,2,3,4,5,5,6,7,8,9 - false
+N=3   1,2,2,3,3,3
 
-1,3,4,5,6,7 - true
+N=4   1,2,2,3,3,3,4,4,4,4
 
-vuoto - false
+N=5   1,2,2,3,3,3,4,4,4,4,5,5,5,5,5
+
+N=6   1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6,6
+
+ 
