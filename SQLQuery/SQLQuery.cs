@@ -7,13 +7,12 @@ namespace SQLQuery
 
     public static class Query {
         
-        public static List<Record> query() 
+        public static List<Record> tutti_gli_album() 
         {
             SQLiteConnection cn1 = new SQLiteConnection("chinook.db");
-            var t = cn1.Query<Record>( "select * from albums" ); 
-            int r = t.Count;
+            List<Record> retVal = cn1.Query<Record>( "select * from albums" ); 
 
-            return null;                        
+            return retVal;                        
         }
 
     }
