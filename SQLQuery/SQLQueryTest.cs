@@ -38,7 +38,7 @@ namespace SQLQuery
         public void album_and_number_of_tracks()
         {
             List<Record> result = Query.album_and_number_of_tracks();
-            Assert.Equal(57,result[0].NTracks);
+            Assert.Equal("57",result[0].NTracks);
             Assert.Equal("Greatest Hits",result[0].Title);
         }
 
@@ -49,8 +49,8 @@ namespace SQLQuery
             Assert.Equal("Iron Maiden",result[0].Name);
             Assert.Equal("The Doors",result[190].Name);
 
-            Assert.Equal(21,result[0].NAlbums);
-            Assert.Equal(1,result[190].NAlbums);
+            Assert.Equal("21",result[0].NAlbums);
+            Assert.Equal("1",result[190].NAlbums);
         }
     }
 }
