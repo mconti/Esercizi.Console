@@ -15,6 +15,22 @@ namespace SQLQuery
             return retVal;                        
         }
 
+        public static List<Record> album_and_artist_in_order_of_album() 
+        {
+            return null;                        
+        }
+        public static List<Record> album_and_artist_in_order_of_artist() 
+        {
+            return null;                        
+        }
+        public static List<Record> album_and_number_of_tracks() 
+        {
+            return null;                        
+        }
+        public static List<Record> artist_and_album() 
+        {
+            return null;                        
+        }
     }
 
     public class Record
@@ -25,7 +41,5 @@ namespace SQLQuery
         public string Name {get;set;} 
         public string NTracks {get;set;} 
         public string NAlbums {get;set;} 
-
-        public override string ToString() => $"{AlbumId}, {Title}, {ArtistId}, {Name}";
     }
 }
