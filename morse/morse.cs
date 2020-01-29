@@ -1,6 +1,5 @@
 public class Morse {
 
-    public string Alfabeto{get;set;}
 
     public Morse()
     {
@@ -8,7 +7,6 @@ public class Morse {
     }
     public Morse(string Alfabeto)
     {
-        this.Alfabeto = Alfabeto;
     }
 
     public string Codifica( string s )
