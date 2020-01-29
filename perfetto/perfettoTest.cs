@@ -63,6 +63,7 @@ public class PerfectNumbersTest
     public void Large_deficient_number_is_classified_correctly()
     {
         Assert.Equal(Numero.Scarso, NumeroPerfetto.Verifica(33550337));
+                                                       //   33550337
     }
 
     [Fact]

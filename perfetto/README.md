@@ -25,4 +25,4 @@ Ad esempio, la somma aliquota di 15 è (1 + 3 + 5) = 9
 8 è un numero scarso perché (1 + 2 + 4) = 7
 ```
 
-**I numeri primi sono tutti perfetti**
+**Domanda: I numeri primi sono tutti perfetti?**
