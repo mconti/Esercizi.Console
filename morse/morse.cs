@@ -11,7 +11,7 @@ public class Morse {
 
     public string Codifica( string s )
     {
-        return "...---...";
+        return "... --- ...";
     }
     public string Decodifica( string s )
     {
