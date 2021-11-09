@@ -35,11 +35,14 @@ Ad esempio 10 in formato double si scrive 10.0
 Attenzione alle regole del tipo double.
 Se dobbiamo ad esempio trovare i minuti partendo dai secondi, meglio scrivere:
 
+```javascript
 double minuti = secondi / 60.0;
+```
 
 .NET ha una classe Math con un metodo Round() che serve per arrotondare.
 In questo esercizio si arrotonda a 2 cifre decimali quindi usare una formula tipo questa:
 
+```javascript
 double retVal = Math.Round( valoreDaArrotondare, 2 );
-
 return retVal;
+```
