@@ -29,17 +29,17 @@ di una persona che ha 1.000.000.000 di secondi.
 
 ## Note
 
-I valori double in C# si esprimono con un .
+- I valori double in C# si esprimono con un .
 Ad esempio 10 in formato double si scrive 10.0
 
-Attenzione alle regole del tipo double.
+- Attenzione alle regole del tipo double.
 Se dobbiamo ad esempio trovare i minuti partendo dai secondi, meglio scrivere:
 
 ```javascript
 double minuti = secondi / 60.0;
 ```
 
-.NET ha una classe Math con un metodo Round() che serve per arrotondare.
+- .NET ha una classe Math con un metodo Round() che serve per arrotondare.
 In questo esercizio si arrotonda a 2 cifre decimali quindi usare una formula tipo questa:
 
 ```javascript
