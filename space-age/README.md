@@ -1,6 +1,6 @@
 # Space Age
 
-I pianeti hanno tutti un periodo orbitale diverso: 
+Il periodo orbitale (quanto ci mette un pianeta a fare un giro intorno al sole) cambia a seconda del pianeta 
 
 | Pianeta | Tempo per completare un giro intorno al sole |
 |--|--|
@@ -13,7 +13,7 @@ I pianeti hanno tutti un periodo orbitale diverso:
 | Urano | 84.016846 anni terrestri |
 | Nettuno | 164.79132 anni terrestri |
 
-Quindi, se ti viene detto che qualcuno ha 1.000.000.000 di secondi, dovresti essere in grado di dire che ha compiuto 31,69 anni terrestri.
+Quindi, se ti viene detto che sulla terra qualcuno ha 1.000.000.000 di secondi, dovresti essere in grado di dire che ha compiuto 31,69 anni terrestri.
 
 
 Esercizio
