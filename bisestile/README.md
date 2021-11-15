@@ -7,7 +7,7 @@ Nel calendario Gregoriano
 ```text
 è bisestile...
 ogni anno divisibile (in modo intero) per 4 ma non per 100
-ogni anno divisibile per 400
+oppure ogni anno divisibile per 400
 ```
 
 **Esempi**
