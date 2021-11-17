@@ -6,6 +6,7 @@ Tra i problemi irrisolti in matematica c’è una congettura (una affermazione c
 - Se n è dispari, moltiplicalo per 3 e aggiungigli 1 per ottenere 3n + 1. 
 - Ripeti il ​​processo all’infinito. 
 - indipendentemente dal numero con cui inizi, alla fine raggiungerai sempre 1.
+- quello da stabilire qui è quanti passi servono per farlo!!
 
 A proposito di questa congettura, il famoso matematico ungherese Paul Erdős disse: *«La matematica non è ancora pronta per problemi di questo tipo»* ed offrì 500 dollari per la sua soluzione[1].
 
