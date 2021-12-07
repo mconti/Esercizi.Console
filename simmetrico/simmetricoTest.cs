@@ -32,5 +32,22 @@ namespace simmetrico
             var valori = new[] { 2,2 };
             Assert.True(Simmetrico.Verifica( valori ));
         }
+        [Fact]
+        public void Test_null()
+        {
+            Assert.False(Simmetrico.Verifica( null ));
+        }
+        [Fact]
+        public void Test_vuoto()
+        {
+            int[] valori = new int[]{};
+            Assert.False(Simmetrico.Verifica( valori ));
+        }
+        [Fact]
+        public void Test5()
+        {
+            var valori = new[] { 0,2,0 };
+            Assert.True(Simmetrico.Verifica( valori ));
+        }
     }
 }

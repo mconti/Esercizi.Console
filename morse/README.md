@@ -6,13 +6,13 @@ Riferimenti:
 *https://it.wikipedia.org/wiki/Codice_Morse*
 
 
-Realizzare una classe Morse che possa:
+Realizzare una classe Morse che:
 
-- essere istanziata senza parametri utilizzi l'alfabeto del codice morse internazionale.
+- se istanziata senza parametri, utilizzi l'alfabeto del codice morse internazionale.
 
-- essere istanziata con una stringa che rappresenta un alfabeto personalizzato con la seguente struttura:
+- possa essere istanziata con una stringa che rappresenta un alfabeto personalizzato con la seguente struttura:
 
-*25 simboli*
+*devono essere presenti 25 simboli*
 
 *i simboli sono separati da uno spazio*
 
