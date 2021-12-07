@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

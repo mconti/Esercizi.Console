@@ -10,3 +10,4 @@ Ad esempio:
 - 154 *non* è un numero di Armstrong, perchè: `154 != 1^3 + 5^3 + 4^3 = 1 + 125 + 64 = 190`
 
 Completare l'esercizio, facendo in modo che superi tutti i test previsti.
+

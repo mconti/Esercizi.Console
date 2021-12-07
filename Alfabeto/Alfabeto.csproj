@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
+<<<<<<< HEAD
     <TargetFramework>netcoreapp5.0</TargetFramework>
+=======
+    <TargetFramework>net5</TargetFramework>
+>>>>>>> 43666117969227a5429c2abe75b37a2d95ad83e7
   </PropertyGroup>
 
   <ItemGroup>
