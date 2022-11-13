@@ -10,7 +10,7 @@ Tra i problemi irrisolti in matematica c’è una congettura (una affermazione c
 
 A proposito di questa congettura, il famoso matematico ungherese Paul Erdős disse: *«La matematica non è ancora pronta per problemi di questo tipo»* ed offrì 500 dollari per la sua soluzione[1].
 
-Questo esercizio prevede di realizzare un programma che passato un interno N, torni il numero di passi necessari a raggiungere 1.
+Questo esercizio prevede di realizzare un programma che passato un intero N, torni il numero di passi necessari a raggiungere 1.
 
 Riferimenti storici
 https://it.wikipedia.org/wiki/Congettura_di_Collatz
