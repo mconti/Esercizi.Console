@@ -46,3 +46,4 @@ In questo esercizio si arrotonda a 2 cifre decimali quindi usare una formula tip
 double retVal = Math.Round( valoreDaArrotondare, 2 );
 return retVal;
 ```
+https://concepto.de/wp-content/uploads/2018/02/Sistema-solar-e1518703607625.jpg
