@@ -5,7 +5,7 @@ Data una stringa di cifre, creare tutte le sottostringhe contigue di lunghezza N
 In questo esercizio, cercare di usare solo string e vettori.
 Non usare Collezioni (List<>, etc)
 
-Solo per collezionare il vettore di ritorno, volendo, si può usare una List<string>.
+Solo per collezionare il vettore di ritorno, volendo, si può usare una List<string> (vedi codice)
 
 
 Ad esempio, 
@@ -15,4 +15,6 @@ Ad esempio,
 - E le seguenti serie di 4 cifre:
 - "4914", "9142"
 
-In caso di 6 cifre deve dare errore… (vedi test)
+In caso di 6 cifre deve sollevare una eccezione eseguendo la seguente riga di codice
+
+ throw new ArgumentException();
