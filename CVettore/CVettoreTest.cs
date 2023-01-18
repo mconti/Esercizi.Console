@@ -48,5 +48,13 @@ namespace CVettore
             Assert.Equal<int>( 66, v.Somma() );
 
         }
+        [Fact]
+        public void test_dimensione_zero()
+        {
+            Vettore v = new Vettore( 0 );
+            Assert.Equal<int>( 0, v.Ultimo() );
+            Assert.False( v.Aggiungi(51) );
+            Assert.Equal<int>( 0, v.Somma() );
+        }
     }
 }
