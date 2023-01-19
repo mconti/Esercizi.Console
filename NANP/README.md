@@ -30,3 +30,7 @@ Ad esempio, i seguenti input
 - 613.995.0253
 
 devono produrre tutti lo stesso output **6139950253**
+
+Nota:
+Il metodo Char.IsDigit(c) del C# può essere di aiuto!!
+Anche la classe StringBuilder può servire!!
