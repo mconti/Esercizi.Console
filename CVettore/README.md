@@ -12,6 +12,7 @@ un metodo Somma che torna la somma degli elementi
 
 un metodo Ultimo che torna l'ultimo valore inserito
 
+un metodo EliminaUltimo() che torna true se riesce a eliminare l'ultimo valore inserito, false altrimenti
 
 
 # Aggiungere le proprietà private necessarie el funzionamento della classe 
