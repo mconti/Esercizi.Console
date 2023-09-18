@@ -5,7 +5,7 @@ Ricevuto come parametro un vettore di string, ritornare al chiamante la prima st
 - oppure con 0039 (esattamente lungo 14)
 - oppure con un 3 (esattamente lungo 10)
 
-Se il numero non viene trovato, ritornare strunga vuota ""
+Se il numero non viene trovato, ritornare stringa vuota ""
 
 Ad esempio.
 Se arriva "05417373", "3367726712",  "778823"
